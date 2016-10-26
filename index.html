@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Photon</title>
     <link rel="stylesheet" href="./css/photon.min.css">
     <script src="js/menu.js" charset="utf-8"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="window">
-      <div class="window-content">
-        <div class="window">
-          <header class="toolbar toolbar-header">
-            <h1 class="title">Student Organizer App</h1>
-          </header>
-
-          <div class="window-content">
-
-            <div class="pane-group">
-              <div class="pane-sm sidebar">
-              <div class="tab-group">
-              <nav class="nav-group" style="width: 100%;">
-                <a class="nav-group-item active">
-                  <span class="icon icon-home"></span>
-                  Home
-                </a>
-                <span class="nav-group-item">
+        <div class="window-content">
+            <div class="window">
+                <header class="toolbar toolbar-header">
+                    <h1 class="title">Student Organizer App</h1>
+                </header>
+                <div class="window-content">
+                    <div class="pane-group">
+                        <div class="pane-sm sidebar">
+                            <div class="tab-group">
+                                <nav class="nav-group" style="width: 100%;">
+                                    <a class="nav-group-item active">
+                                        <span class="icon icon-home"></span> Home
+                                    </a>
+                                    <span class="nav-group-item">
                   <span class="icon icon-folder">
                     <a class="nav-group-item active" href="calendar.html" target="Mainframe"> </a>
-                  </span>
-                  Schedule
-                </span>
-                <span class="nav-group-item">
-                  <span class="icon icon-book"></span>
-                  Homework
-                </span>
-                <span class="nav-group-item">
-                  <span class="icon icon-doc-text-inv"></span>
-                  Exams
-                </span>
-                </nav>
-              </div>
+                  </span> Schedule
+                                    </span>
+                                    <span class="nav-group-item">
+                  <span class="icon icon-book"></span> Homework
+                                    </span>
+                                    <span class="nav-group-item">
+                  <span class="icon icon-doc-text-inv"></span> Exams
+                                    </span>
+                                </nav>
+                            </div>
+                        </div>
+                        <div>
+                            <webview id="calframe" src="calendar.html" name="Mainframe" allowTransparency="true" scrolling="yes" frameborder="1" 
+                              style="overflow: scroll; height: 100%; width: calc(100% - 150px); position: absolute;" height="100%" width="calc(100% - 150px)">
+                            </webview>
+                        </div>
+                    </div>
+                    <footer class="toolbar toolbar-footer">
+                        <h1 class="title"></h1>
+                    </footer>
+                </div>
             </div>
-             <div>
-    <iframe src="calendar.html" name="Mainframe" allowTransparency="true" scrolling="yes" frameborder="1" style="overflow: scroll; height: 100%;
-        width: calc(100% - 150px); position: absolute;" height="100%" width="calc(100% - 150px)" >
-    </iframe>
-  </div>
-          </div>
-          
-          <footer class="toolbar toolbar-footer">
-            <h1 class="title"></h1>
-          </footer>
-        </div>
-    </div>
-  </body>
-  <script>
-    require('./renderer.js')
-  </script>
+</body>
+<script>
+require('./renderer.js')
+
+document.addEventListener("keydown", function(e) {
+    if (e.which === 123) {
+        require('remote').getCurrentWindow().toggleDevTools();
+    } else if (e.which === 116) {
+        location.reload();
+    }
+});
+</script>
 
 </html>
