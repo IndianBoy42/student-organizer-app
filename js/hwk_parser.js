@@ -1,4 +1,5 @@
 const Sugar = require('sugar')
+const fs = require('fs')
 // const $ = require('jquery')
 
 String.prototype.format = String.prototype.f = function() {
@@ -11,9 +12,10 @@ String.prototype.format = String.prototype.f = function() {
     return s;
 };
 
-m = /(.+)\s+(?:in|of)\s+(.+)\s+((?:on|by)\s+([^!]+)|(?:next|this|in)\s+[^!]+)(!?)/
+m = /(.+?)\s+(?:in|of)\s+(.+?)\s+((?:on|by)\s+([^!]+)|(?:next|this|in)\s+[^!]+)(!?)/
 l = /[^,(and)\s][^\,(and)]*[^,\s]*/g
 d = "{HH}:{mm} on {Weekday}, the {do} of {Month}, {year}"
+f = "./json/events.json"
 
 function parse(t) {
     obj = {}
@@ -48,9 +50,37 @@ function toevent(e) {
     return event
 }
 
-function addevent(e) {
+function addevent(e, s) {
     // console.log(cal)
     $("#calendar").fullCalendar('renderEvent', toevent(e), true)
+
+    if (s) {
+        saveevents()
+    }
+}
+
+function getevents() {
+    var events = $("#calendar").fullCalendar("clientEvents")
+    let json = events.map(e => {
+        let rv = {};
+        Object.keys(e)
+            .filter(k => k != "source" && !k.startsWith("_"))
+            .forEach(k => {
+                rv[k] = e[k];
+            });
+        return rv;
+    });
+    return json
+}
+
+function saveevents() {
+    fs.writeFile(f, JSON.stringify(getevents()), function(err) {
+        if(err){
+              alert("An error ocurred updating the file"+ err.message);
+              console.log(err);
+              return;
+        }
+    })
 }
 
 exports.input_regex = m
@@ -59,3 +89,6 @@ exports.date_fmt = d
 exports.parse = parse
 exports.addevent = addevent
 exports.toevent = toevent
+exports.getevents = getevents
+exports.eventsfile = f
+exports.saveevents = saveevents

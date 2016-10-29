@@ -37,7 +37,7 @@ $("#command").keypress(function(e) {
         if (a == undefined) {
         	return false
         }
-        hwk.addevent(a)
+        hwk.addevent(a, true)
 
         //clear field
         $('#command').val('')
