@@ -3,6 +3,40 @@
  * Docs & License: http://fullcalendar.io/
  * (c) 2016 Adam Shaw
  */
+const $ = require('jquery')
+const fullCalendar = require('fullcalendar')
+
+$(document).ready(function() {
+    var testing;
+    $.ajax('./json/events.json', {
+        dataType: 'text',
+        success: function(data) {
+            testing = data;
+        }
+    }),
+    $('#calendar').fullCalendar({
+
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay,listWeek'
+        },
+        //defaultDate: '2016-09-12',
+        editable: true,
+        navLinks: true, // can click day/week names to navigate views
+        eventLimit: true, // allow "more" link when too many events
+        events: {
+            url: 'json/events.json',
+            error: function() {
+                $('#script-warning').show();
+            }
+        },
+        loading: function(bool) {
+            $('#loading').toggle(bool);
+        }
+
+    });
+});
 
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {
