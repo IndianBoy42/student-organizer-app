@@ -1,5 +1,5 @@
 const Sugar = require('sugar')
-const fullcalendar = require('fullcalendar')
+// const $ = require('jquery')
 
 String.prototype.format = String.prototype.f = function() {
     var s = this,
@@ -16,32 +16,41 @@ l = /[^,(and)\s][^\,(and)]*[^,\s]*/g
 d = "{HH}:{mm} on {Weekday}, the {do} of {Month}, {year}"
 
 function parse(t) {
-  obj = {}
-  m1 = t.match(m)
-  obj.raw = m1[0]
-  obj.homework = m1[1]
-  obj.subjectstr = m1[2]
-  obj.subjects = m1[2].match(l)
-  obj.duedatestr = ""
-  if (m1[4] == undefined) {
-    obj.duedatestr = m1[3]
-  } else {
-    obj.duedatestr = m1[4]
-  }
-  obj.duedate = Sugar.Date.create(obj.duedatestr)
-  obj.duedatefmt = Sugar.Date.format(obj.duedate, d)
-  obj.priority = m1[5] == '!'
-  return obj
+    obj = {}
+    m1 = t.match(m)
+    if (m1 == null) {
+        return undefined
+    }
+    obj.raw = m1[0]
+    obj.homework = m1[1]
+    obj.subjectstr = m1[2]
+    obj.subjects = m1[2].match(l)
+    obj.subjectlist = obj.subjects.join(', ')
+    obj.duedatestr = ""
+    if (m1[4] == undefined) {
+        obj.duedatestr = m1[3]
+    } else {
+        obj.duedatestr = m1[4]
+    }
+    obj.duedate = Sugar.Date.create(obj.duedatestr)
+    obj.duedatefmt = Sugar.Date.format(obj.duedate, d)
+    obj.priority = m1[5] == '!'
+    return obj
 }
 
-function addevent(e, cal) {
-  console.log(cal)
-  event = {
-    title: "{0} in {1}".f(e.homework, e.subjects.join(', ')),
-    start: Sugar.Date.format(e.duedate, 'ISO8601')
-    //TODO: ALL DAY // END DATE // COLOR
-  }
-  cal.fullCalendar('renderEvent', event, true)
+function toevent(e) {
+    event = {
+        "title": "{0} in {1}".f(e.homework, e.subjectlist),
+        // start: Sugar.Date.format(e.duedate, 'ISO8601')
+        "start": e.duedate
+            //TODO: ALL DAY // END DATE // COLOR
+    }
+    return event
+}
+
+function addevent(e) {
+    // console.log(cal)
+    $("#calendar").fullCalendar('renderEvent', toevent(e), true)
 }
 
 exports.input_regex = m
@@ -49,3 +58,4 @@ exports.list_regex = l
 exports.date_fmt = d
 exports.parse = parse
 exports.addevent = addevent
+exports.toevent = toevent
