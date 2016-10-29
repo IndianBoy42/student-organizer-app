@@ -5,6 +5,35 @@
  */
 const $ = require('jquery')
 const fullCalendar = require('fullcalendar')
+const moment = require('moment')
+const fs = require('fs')
+
+function getlistofevents(s) {
+    var events = $("#calendar").fullCalendar("clientEvents")
+    let json = events.map(e => {
+        let rv = {};
+        Object.keys(e)
+            .filter(k => k != "source" && !k.startsWith("_"))
+            .forEach(k => {
+                rv[k] = e[k];
+            });
+        return rv;
+    });
+    if (s) {
+        return JSON.stringify(json)
+    }
+    return json
+}
+
+function savelistofevents() {
+    fs.writeFile(f, getlistofevents(true), function(err) {
+        if(err){
+              alert("An error ocurred updating the file"+ err.message);
+              console.log(err);
+              return;
+        }
+    })
+}
 
 $(document).ready(function() {
     var testing;
@@ -25,6 +54,29 @@ $(document).ready(function() {
         editable: true,
         navLinks: true, // can click day/week names to navigate views
         eventLimit: true, // allow "more" link when too many events
+        // defaultView: "agendaWeek",
+        forceEventDuration: true,
+        defaultTimedEventDuration: moment.duration(1, 'hour'),
+        eventDragStop: function(event,jsEvent, ui, view) {
+
+            var trashEl = $('#sidebar');
+            var ofs = trashEl.offset();
+
+            var x1 = ofs.left;
+            var x2 = ofs.left + trashEl.outerWidth(true);
+            var y1 = ofs.top;
+            var y2 = ofs.top + trashEl.outerHeight(true);
+
+            if (jsEvent.pageX >= x1 && jsEvent.pageX <= x2 &&
+                jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
+                $('#calendar').fullCalendar('removeEvents', event.id);
+     		   	savelistofevents()
+            }
+        },
+        eventDrop: function() {
+        	savelistofevents()
+        },
+        allDayDefault: false,
         events: {
             url: 'json/events.json',
             error: function() {
@@ -46,7 +98,7 @@ $(document).ready(function() {
 		module.exports = factory(require('jquery'), require('moment'));
 	}
 	else {
-		factory(jQuery, moment);
+		factory($, moment);
 	}
 })(function($, moment) {
 

@@ -42,9 +42,11 @@ function parse(t) {
 
 function toevent(e) {
     event = {
+        "id": "{0}_{1}_{2}".f(e.homework, e.subjects.join("-"), Sugar.Date.format(e.duedate, "ISO8601")),
         "title": "{0} in {1}".f(e.homework, e.subjectlist),
         // start: Sugar.Date.format(e.duedate, 'ISO8601')
-        "start": e.duedate
+        "start": e.duedate,
+        // "allDay": true
             //TODO: ALL DAY // END DATE // COLOR
     }
     return event
@@ -59,7 +61,7 @@ function addevent(e, s) {
     }
 }
 
-function getevents() {
+function getevents(s) {
     var events = $("#calendar").fullCalendar("clientEvents")
     let json = events.map(e => {
         let rv = {};
@@ -70,6 +72,9 @@ function getevents() {
             });
         return rv;
     });
+    if (s) {
+        return JSON.stringify(json)
+    }
     return json
 }
 
@@ -92,3 +97,36 @@ exports.toevent = toevent
 exports.getevents = getevents
 exports.eventsfile = f
 exports.saveevents = saveevents
+
+$('#command').bind("input propertychange", function(e) {
+    t = $('#command').val()
+    a = parse(t)
+    if (a == undefined) {
+        console.log("not yet")
+            // $("#instructions").html("Format: [Homework Name] [in/of] [Subject(s)] [on/by] [Due Date]")
+        $("#hwkname").html("Homework Name: ")
+        $("#hwksubj").html("Subject(s): ")
+        $("#hwkdate").html("Due Date: ")
+        return false
+    }
+    $("#hwkname").html("Homework Name: " + a.homework)
+    $("#hwksubj").html("Subject(s): " + a.subjectlist)
+    $("#hwkdate").html("Due Date: " + a.duedatefmt)
+})
+
+$("#command").keypress(function(e) {
+    if (e.which == 13) {
+        e.preventDefault()
+
+        //get and parse
+        t = $('#command').val()
+        a = parse(t)
+        if (a == undefined) {
+            return false
+        }
+        addevent(a, true)
+
+        //clear field
+        $('#command').val('')
+    }
+})
