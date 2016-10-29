@@ -24,4 +24,21 @@ cd student-organizer-app
 npm install && npm start
 ```
 
+keep your fork up to date
+
+```
+#add this repo as upstream
+git remote add upstream https://github.com/GeckoTheGeek42/student-organizer-app
+#fetch upstream
+git fetch upstream
+#rebase the repo (god knows what that means)
+git rebase upstream/master
+#push back to master
+git push origin master
+```
+
+or
+
+http://www.hpique.com/2013/09/updating-a-fork-directly-from-github/
+
 #### License [CC0 (Public Domain)](LICENSE.md)
