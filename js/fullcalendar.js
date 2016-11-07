@@ -55,6 +55,7 @@ $(document).ready(function() {
         navLinks: true, // can click day/week names to navigate views
         eventLimit: true, // allow "more" link when too many events
         // defaultView: "agendaWeek",
+        timezone: 'local',
         forceEventDuration: true,
         defaultTimedEventDuration: moment.duration(1, 'hour'),
         eventDragStop: function(event,jsEvent, ui, view) {

@@ -53,7 +53,6 @@ function toevent(e) {
 }
 
 function addevent(e, s) {
-    // console.log(cal)
     $("#calendar").fullCalendar('renderEvent', toevent(e), true)
 
     if (s) {
@@ -102,7 +101,6 @@ $('#command').bind("input propertychange", function(e) {
     t = $('#command').val()
     a = parse(t)
     if (a == undefined) {
-        console.log("not yet")
             // $("#instructions").html("Format: [Homework Name] [in/of] [Subject(s)] [on/by] [Due Date]")
         $("#hwkname").html("Homework Name: ")
         $("#hwksubj").html("Subject(s): ")
