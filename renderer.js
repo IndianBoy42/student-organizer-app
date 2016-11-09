@@ -5,3 +5,5 @@ const electron = require('electron')
 const app = electron.app
 
 const hwk = require('./js/hwk_parser')
+
+const timetable = require("./js/timetable")

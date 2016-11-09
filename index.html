@@ -4,6 +4,7 @@
 <head>
     <title>Student Organizer App</title>
     <link rel="stylesheet" href="./css/photon.css">
+    <link rel="stylesheet" href="./css/styles.css">
     <link href='css/fullcalendar.css' rel='stylesheet' />
     <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
 
@@ -39,7 +40,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <div id="caldiv" class="app-section" style="overflow-y:auto; height:100%; width:100%;">
+                        <div id="caldiv" class="app-section" style="overflow-y:auto; height:100%; widt8100%;"" hidden="true">
                             <ul class="list-group" style="width:100%;">
                                 <li class="list-group-header">
                                     <input id="command" type="text" class="form-control" placeholder="Format: [Homework Name] [in/of] [Subject(s)] [on/by] [Due Date]" />
@@ -55,13 +56,27 @@
                         <div id="notetaking" class="app-section" style="overflow-y:auto; height:100%; width:100%;" hidden="true">
                             HELLO WORLD!
                         </div>
+                        <div id="timetable" class="app-section" style="overflow-y:auto; height: 100%; width:100%">
+                            <table datasrc='#data' id="timetable-table" cellpadding="0" cellspacing="0" style="border-spacing: 1px; height: 80%; width: 80%">
+                                <thead> 
+                                    <tr>
+                                        <th width="80">Start Time</th>
+                                        <th>Monday</th>
+                                        <th>Tuesday</th>
+                                        <th>Wednesday</th>
+                                        <th>Thursday</th>
+                                        <th>Friday</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-    <script>
-        require('./renderer.js')
-    </script>
+<script>
+    require('./renderer.js')
+</script>
 </html>
