@@ -5,6 +5,7 @@
     <title>Student Organizer App</title>
     <link rel="stylesheet" href="./css/photon.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/notetaking.css">
     <link href='css/fullcalendar.css' rel='stylesheet' />
     <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
 
@@ -24,15 +25,15 @@
                         <div class="pane-sm sidebar" id="sidebar">
                             <div class="tab-group">
                                 <nav class="nav-group" style="width: 100%;">
-                                    <a class="nav-group-item active">
+                                    <a class="nav-group-item active" divlink="caldiv">
                                         <span class="icon icon-doc-text-inv"></span> Schedule
                                     </a>
-                                    <span class="nav-group-item">
+                                    <span class="nav-group-item" divlink="notetaking">
                                         <span class="icon icon-folder">
                                         </span> Note Taking
                                     </span>
-                                    <span class="nav-group-item">
-                                        <span class="icon icon-book"></span> Homework
+                                    <span class="nav-group-item" divlink="timetable">
+                                        <span class="icon icon-book"></span> Timetable
                                     </span>
                                     <span class="nav-group-item">
                                         <span class="icon icon-doc-text-inv"></span> Exams
@@ -40,7 +41,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <div id="caldiv" class="app-section" style="overflow-y:auto; height:100%; widt8100%;"" hidden="true">
+                        <div id="caldiv" class="app-section" style="overflow-y:auto; height:100%; width:100%;">
                             <ul class="list-group" style="width:100%;">
                                 <li class="list-group-header">
                                     <input id="command" type="text" class="form-control" placeholder="Format: [Homework Name] [in/of] [Subject(s)] [on/by] [Due Date]" />
@@ -54,9 +55,31 @@
                             <div id='calendar'></div>
                         </div>
                         <div id="notetaking" class="app-section" style="overflow-y:auto; height:100%; width:100%;" hidden="true">
-                            HELLO WORLD!
+                            <div class="new-note" hidden="true" width="80%">
+                                <form>
+                                    <input type="text" class="note-title" placeholder="Title">
+                                    <textarea class="note-text" placeholder="Type your note (markdown may be used)..."></textarea>
+                                    <button class="save-note success">Save</button>
+                                    <button class="close danger">Cancel</button>
+                                </form>
+                            </div>
+                            <div class="wrap">
+                                <header>
+                                    <h1>Note<span> Taker</span></h1>
+                                    <a href="#" class="add-note">New</a>
+                                </header>
+                                <div class="notes-section">
+                                    <ul></ul>
+                                </div>
+                                <footer>
+                                <a href="#home" class ="button success left">Home</a>
+                                    <a href="#" class="delete-all button danger">Delete All</a>
+                                </footer>
+                            </div>
+                            <!-- <script src="marked.js"></script>
+                            <script src="main.js"></script> -->
                         </div>
-                        <div id="timetable" class="app-section" style="overflow-y:auto; height: 100%; width:100%">
+                        <div id="timetable" class="app-section" style="overflow-y:auto; height: 100%; width:100%" hidden="true">
                             <table datasrc='#data' id="timetable-table" cellpadding="0" cellspacing="0" style="border-spacing: 1px; height: 80%; width: 80%">
                                 <thead> 
                                     <tr>

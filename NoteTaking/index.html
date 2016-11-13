@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" manifest="app.manifest">
+	<head>
+		<title>Note Taker</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+		<link rel="stylesheet" href="style.css">
+		    <link rel="stylesheet" href="C:/Users/Armaan/Downloads/student-organizer-app-master/student-organizer-app-master/css/photon.min.css">
+	</head>
+	<body>
+		<div class="new-note">
+			<form>
+				<input type="text" class="note-title" placeholder="Title">
+				<textarea class="note-text" placeholder="Type your note (markdown may be used)..."></textarea>
+				<button class="save-note success">Save</button>
+				<button class="close danger">Cancel</button>
+			</form>
+		</div>
+		<div class="wrap">
+			<header>
+				<h1>Note<span> Taker</span></h1>
+				<a href="#" class="add-note">New</a>
+			</header>
+			<div class="notes-section">
+				<ul></ul>
+			</div>
+			<footer>
+			<a href="#home" class ="button success left">Home</a>
+				<a href="#" class="delete-all button danger">Delete All</a>
+			</footer>
+		</div>
+		<script src="marked.js"></script>
+		<script src="main.js"></script>
+	</body>
+</html>
