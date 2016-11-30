@@ -8,7 +8,7 @@ const hwk = require('./js/hwk_parser')
 
 const timetable = require("./js/timetable")
 
-const notes = require("./js/notes")
+// const notes = require("./js/notes")
 
 
 $(".nav-group-item").click(function() {
